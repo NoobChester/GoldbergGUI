@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<FileVersion>0.3.0</FileVersion>
+		<FileVersion>0.3.1</FileVersion>
 		<Company>Jeddunk</Company>
 		<Platforms>AnyCPU;x86;x64</Platforms>
 	</PropertyGroup>

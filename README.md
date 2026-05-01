@@ -2,6 +2,20 @@
 
 Set up any game with Goldberg's emulator easily and automatically.
 
+## Syncing with Upstream
+
+This repository is mirrored from the original [Forgejo repository](https://forgejo.jeddunk.xyz/jeddunk/GoldbergGUI.git). To sync with upstream changes:
+
+```powershell
+git remote add upstream https://forgejo.jeddunk.xyz/jeddunk/GoldbergGUI.git
+```
+
+### Pulling Updates from Upstream
+
+```powershell
+git pull upstream master
+```
+
 ## Keeping the Steam Web API key out of source control
 
 This project reads the Steam Web API key from the environment variable `GOLDBERG_STEAM_WEB_API_KEY`.
@@ -83,6 +97,7 @@ Goldberg Emulator is owned by Mr. Goldberg and licensed under the GNU Lesser Gen
 ### Contributors
 
 * [UrbanCMC](https://github.com/UrbanCMC/) - Implementation of achievements
+* [Jeddunk](https://jeddunk.xyz/) - Maintenance and UI overhaul
 
 ### Dependencies
 
