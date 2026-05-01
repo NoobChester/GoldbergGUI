@@ -2,6 +2,46 @@
 
 Set up any game with Goldberg's emulator easily and automatically.
 
+## Keeping the Steam Web API key out of source control
+
+This project reads the Steam Web API key from the environment variable `GOLDBERG_STEAM_WEB_API_KEY`.
+
+Options for development:
+
+- PowerShell (current session):
+
+```powershell
+$env:GOLDBERG_STEAM_WEB_API_KEY = "your_api_key_here"
+```
+
+- PowerShell (persist for current user):
+
+```powershell
+setx GOLDBERG_STEAM_WEB_API_KEY "your_api_key_here"
+```
+
+Notes:
+- Do not commit actual keys to the repository. The `Secrets` class in the project reads from the environment variable and returns an empty string when not set.
+
+-.env file support
+
+The loader accepts lines in the form `KEY=VALUE` and ignores lines starting with `#`.
+
+```
+GOLDBERG_STEAM_WEB_API_KEY=your_api_key_here
+# Other variables also supported
+```
+
+## Building
+
+To compile the project, ensure you have .NET SDK 8.0 or later installed, then run:
+
+```powershell
+dotnet build GoldbergGUI.sln -c Release
+```
+
+The compiled executable will be in `GoldbergGUI.WPF\bin\Release\net8.0-windows\GoldbergGUI.WPF.exe`.
+
 ## Installation
 
 * Install the latest .NET Core Runtime by clicking
@@ -11,7 +51,7 @@ Set up any game with Goldberg's emulator easily and automatically.
 
 ## Usage
 
-* Double-click `GoldbergGUI.WPF.exe` to open the application.  
+* Double-click `GoldbergGUI.WPF.exe` to open the application.
   _(When starting it for the first time, it might take a few seconds since it needs to
   cache a list of games available on the Steam Store and download the latest Goldberg Emulator release.)_
 * Click on the "Select..." button on the top right and select the `steam_api.dll` or `steam_api64.dll` file in the game folder.
