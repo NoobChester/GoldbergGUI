@@ -106,6 +106,7 @@ namespace GoldbergGUI.Core.Services
                     bool haveMoreResults;
                     long lastAppId = 0;
                     var client = new HttpClient();
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
                     var cacheRaw = new HashSet<SteamApp>();
                     do
                     {
@@ -113,8 +114,28 @@ namespace GoldbergGUI.Core.Services
                             ? await client.GetAsync($"{steamCache.SteamUri}&last_appid={lastAppId}")
                                 .ConfigureAwait(false)
                             : await client.GetAsync(steamCache.SteamUri).ConfigureAwait(false);
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            _log.LogError("Failed to fetch Steam app list: {Status} {Reason}", response.StatusCode, response.ReasonPhrase);
+                            break;
+                        }
                         var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var steamApps = DeserializeSteamApps(steamCache.ApiVersion, responseBody);
+                        var trimmed = responseBody?.TrimStart();
+                        if (string.IsNullOrEmpty(trimmed))
+                        {
+                            _log.LogError("Unexpected non-JSON response when fetching Steam app list. Likely an HTML error page or anti-bot response.");
+                            break;
+                        }
+                        SteamApps steamApps;
+                        try
+                        {
+                            steamApps = DeserializeSteamApps(steamCache.ApiVersion, responseBody);
+                        }
+                        catch (Exception ex)
+                        {
+                            _log.LogError(ex, "Failed to deserialize Steam app list JSON");
+                            break;
+                        }
                         foreach (var appListApp in steamApps.AppList.Apps) cacheRaw.Add(appListApp);
                         haveMoreResults = steamApps.AppList.HaveMoreResults;
                         lastAppId = steamApps.AppList.LastAppid;
@@ -197,16 +218,29 @@ namespace GoldbergGUI.Core.Services
                 _log.LogInformation("Get DLC for App {steamApp}", steamApp);
                 var task = AppDetails.GetAsync(steamApp.AppId);
                 var steamAppDetails = await task.ConfigureAwait(true);
+                if (steamAppDetails == null)
+                {
+                    _log.LogError("steamAppDetails was null for App {steamApp}", steamApp);
+                    return dlcList;
+                }
+
                 if (steamAppDetails.Type == AppTypeGame)
                 {
-                    steamAppDetails.DLC.ForEach(async x =>
+                    if (steamAppDetails.DLC != null)
                     {
-                        var result = await _db.Table<SteamApp>().Where(z => z.AppType == AppTypeDlc)
-                                         .FirstOrDefaultAsync(y => y.AppId.Equals(x)).ConfigureAwait(true)
-                                     ?? new SteamApp() { AppId = x, Name = $"Unknown DLC {x}", ComparableName = $"unknownDlc{x}", AppType = AppTypeDlc };
-                        dlcList.Add(new DlcApp(result));
-                        _log.LogDebug($"{result.AppId}={result.Name}");
-                    });
+                        foreach (var x in steamAppDetails.DLC)
+                        {
+                            var result = await _db.Table<SteamApp>().Where(z => z.AppType == AppTypeDlc)
+                                             .FirstOrDefaultAsync(y => y.AppId.Equals(x)).ConfigureAwait(true)
+                                         ?? new SteamApp() { AppId = x, Name = $"Unknown DLC {x}", ComparableName = $"unknownDlc{x}", AppType = AppTypeDlc };
+                            dlcList.Add(new DlcApp(result));
+                            _log.LogDebug($"{result.AppId}={result.Name}");
+                        }
+                    }
+                    else
+                    {
+                        _log.LogDebug("No DLC entries found for App {steamApp}", steamApp);
+                    }
 
                     _log.LogInformation("Got DLC successfully...");
 

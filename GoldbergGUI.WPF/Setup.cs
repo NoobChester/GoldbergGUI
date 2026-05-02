@@ -25,7 +25,7 @@ namespace GoldbergGUI.WPF
 
         protected override ILoggerFactory CreateLogFactory()
         {
-            return new LoggerFactory(new[] { new SerilogLoggerProvider(Log.Logger) });
+            return new LoggerFactory();
         }
     }
 }
