@@ -1,25 +1,19 @@
 using GoldbergGUI.Core.Models;
+using Microsoft.Extensions.Logging;
 using MvvmCross.Commands;
-using MvvmCross.Logging;
 using MvvmCross.Navigation;
+using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GoldbergGUI.Core.ViewModels
 {
-    public class SearchResultViewModel : MvxNavigationViewModel<IEnumerable<SteamApp>>, IMvxViewModel<IEnumerable<SteamApp>, SteamApp>
+    public class SearchResultViewModel(ILoggerFactory logProvider, IMvxNavigationService navigationService, IMvxMessenger messenger) : MvxNavigationViewModel<IEnumerable<SteamApp>>(logProvider, navigationService), IMvxViewModel<IEnumerable<SteamApp>>
     {
-        private readonly IMvxNavigationService _navigationService;
-        private readonly IMvxLog _log;
+        private readonly ILogger<SearchResultViewModel> _log = logProvider.CreateLogger<SearchResultViewModel>();
+        private readonly IMvxMessenger _messenger = messenger;
         private IEnumerable<SteamApp> _apps;
-
-        public SearchResultViewModel(IMvxLogProvider logProvider, IMvxNavigationService navigationService) :
-            base(logProvider, navigationService)
-        {
-            _log = logProvider.GetLogFor(typeof(SearchResultViewModel));
-            _navigationService = navigationService;
-        }
 
         public override void Prepare(IEnumerable<SteamApp> parameter)
         {
@@ -31,8 +25,7 @@ namespace GoldbergGUI.Core.ViewModels
             get => _apps;
             set
             {
-                _apps = value;
-                RaisePropertyChanged(() => Apps);
+                SetProperty(ref _apps, value);
             }
         }
 
@@ -61,14 +54,15 @@ namespace GoldbergGUI.Core.ViewModels
         {
             if (Selected != null)
             {
-                _log.Info($"Successfully got app {Selected}");
-                await _navigationService.Close(this, Selected).ConfigureAwait(false);
+                _log.LogInformation("Successfully got app {AppName}", Selected.Name);
+                _messenger.Publish(new AppSelectedMessage(this, Selected));
+                await NavigationService.Close(this).ConfigureAwait(false);
             }
         }
 
         private async Task Close()
         {
-            await _navigationService.Close(this).ConfigureAwait(false);
+            await NavigationService.Close(this).ConfigureAwait(false);
         }
     }
 }

@@ -1,24 +1,31 @@
-using MvvmCross.Logging;
+using Microsoft.Extensions.Logging;
 using MvvmCross.Platforms.Wpf.Core;
 using Serilog;
+using Serilog.Extensions.Logging;
 using System.IO;
 
 namespace GoldbergGUI.WPF
 {
     public class Setup : MvxWpfSetup<Core.App>
     {
-        public override MvxLogProviderType GetDefaultLogProviderType() => MvxLogProviderType.Serilog;
-
-        protected override IMvxLogProvider CreateLogProvider()
+        protected override ILoggerProvider CreateLogProvider()
         {
             var logPath = Path.Combine(Directory.GetCurrentDirectory(), "goldberg_.log");
-            Log.Logger = new LoggerConfiguration()
+
+            var serilogLogger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Console()
                 .WriteTo.File(logPath, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
-            return base.CreateLogProvider();
+
+            Log.Logger = serilogLogger;
+
+            return new SerilogLoggerProvider(serilogLogger);
         }
 
+        protected override ILoggerFactory CreateLogFactory()
+        {
+            return new LoggerFactory(new[] { new SerilogLoggerProvider(Log.Logger) });
+        }
     }
 }

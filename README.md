@@ -51,7 +51,9 @@ GOLDBERG_STEAM_WEB_API_KEY=your_api_key_here
 To compile the project, ensure you have .NET SDK 8.0 or later installed, then run:
 
 ```powershell
+dotnet restore
 dotnet build GoldbergGUI.sln -c Release
+dotnet publish ./GoldbergGUI.WPF/GoldbergGUI.WPF.csproj -c Release -o YOUR_DESTINATION_HERE
 ```
 
 The compiled executable will be in `GoldbergGUI.WPF\bin\Release\net8.0-windows\GoldbergGUI.WPF.exe`.
@@ -97,7 +99,8 @@ Goldberg Emulator is owned by Mr. Goldberg and licensed under the GNU Lesser Gen
 ### Contributors
 
 * [UrbanCMC](https://github.com/UrbanCMC/) - Implementation of achievements
-* [Jeddunk](https://jeddunk.xyz/) - Maintenance and UI overhaul
+* [Jeddunk](https://jeddunk.xyz/) - Upstream repository owner
+* [NoobChester](https://github.com/NoobChester/) - Maintenance
 
 ### Dependencies
 
@@ -105,9 +108,8 @@ Goldberg Emulator is owned by Mr. Goldberg and licensed under the GNU Lesser Gen
 * MvvmCross
 * NinjaNye
 * Serilog
-* SharpCompress
 * sqlite-net-pcl
-* My fork of SteamStorefrontAPI
+* SteamStorefrontAPI
 
 ## License
 

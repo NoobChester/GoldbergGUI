@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<FileVersion>0.3.1</FileVersion>
-		<Company>Jeddunk</Company>
-		<Platforms>AnyCPU;x86;x64</Platforms>
+		<Company>Jeddunk; NoobChester</Company>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AngleSharp" Version="0.14.0" />
-		<PackageReference Include="MvvmCross" Version="7.1.2" />
-		<PackageReference Include="NinjaNye.SearchExtensions" Version="3.0.1" />
-		<PackageReference Include="SharpCompress" Version="0.35.0" />
-		<PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
-		<PackageReference Include="SteamStorefrontAPI" Version="2.0.1.421" />
+		<PackageReference Include="AngleSharp" Version="1.4.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.7" />
+		<PackageReference Include="MvvmCross" Version="10.1.2" />
+		<PackageReference Include="MvvmCross.Plugin.Messenger" Version="10.1.2" />
+		<PackageReference Include="NinjaNye.SearchExtensions" Version="4.0.1" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="SteamStorefrontAPI" Version="3.0.0.1651" />
 	</ItemGroup>
 
 	<ItemGroup>

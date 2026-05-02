@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 namespace GoldbergGUI.Core.Utils
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class CustomMvxAppStart<TViewModel> : MvxAppStart<TViewModel> where TViewModel : IMvxViewModel
+    public class CustomMvxAppStart<TViewModel>(IMvxApplication application, IMvxNavigationService navigationService) : MvxAppStart<TViewModel>(application, navigationService) where TViewModel : IMvxViewModel
     {
-        public CustomMvxAppStart(IMvxApplication application, IMvxNavigationService navigationService) : base(application, navigationService)
-        {
-        }
-
         protected override async Task NavigateToFirstViewModel(object hint = null)
         {
             //return base.NavigateToFirstViewModel(hint);

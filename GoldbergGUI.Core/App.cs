@@ -1,6 +1,8 @@
 ﻿using GoldbergGUI.Core.Utils;
 using GoldbergGUI.Core.ViewModels;
+using MvvmCross;
 using MvvmCross.IoC;
+using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 
 namespace GoldbergGUI.Core
@@ -9,6 +11,7 @@ namespace GoldbergGUI.Core
     {
         public override void Initialize()
         {
+            Mvx.IoCProvider.RegisterSingleton<IMvxMessenger>(new MvxMessengerHub());
             CreatableTypes()
                 .EndingWith("Service")
                 .AsInterfaces()

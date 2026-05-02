@@ -25,7 +25,7 @@
                 <TabItem Header="General">
                     <!--
                 <TabItem.InputBindings>
-                    <KeyBinding Key="V" Modifiers="Control" 
+                    <KeyBinding Key="V" Modifiers="Control"
                                 Command="{Binding PasteDlcCommand}"/>
                 </TabItem.InputBindings>
                 -->
@@ -152,8 +152,8 @@
                             </Grid.RowDefinitions>
                             <Label Content="Account name" HorizontalAlignment="Left" Margin="0,0,10,0" />
                             <TextBox Text="{Binding AccountName, Mode=TwoWay}" Height="20" Grid.Row="0" Grid.Column="1"/>
-                            <CheckBox Content="Global" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" 
-                                      Margin="10,0,5,0" VerticalAlignment="Center" IsChecked="True" 
+                            <CheckBox Content="Global" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"
+                                      Margin="10,0,5,0" VerticalAlignment="Center" IsChecked="True"
                                       IsEnabled="False"/>
                             <!--
                                       IsEnabled="{Binding DllSelected, UpdateSourceTrigger=PropertyChanged}"/>
@@ -161,8 +161,8 @@
                             <Label Content="Steam64ID" HorizontalAlignment="Left" Grid.Row="1"
                                 Grid.Column="0" Margin="0,0,10,0" />
                             <TextBox Text="{Binding SteamId, Mode=TwoWay}" Grid.Column="1" Height="20" Grid.Row="1"/>
-                            <CheckBox Content="Global" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" 
-                                      Margin="10,0,5,0" VerticalAlignment="Center" IsChecked="True" 
+                            <CheckBox Content="Global" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right"
+                                      Margin="10,0,5,0" VerticalAlignment="Center" IsChecked="True"
                                       IsEnabled="False"/>
                             <!--
                                       IsEnabled="{Binding DllSelected, UpdateSourceTrigger=PropertyChanged}"/>
@@ -170,16 +170,16 @@
                             <Label Content="Language" HorizontalAlignment="Left" Grid.Row="2"
                                 Grid.Column="0" Margin="0,0,10,0" />
                             <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding SteamLanguages}" SelectedItem="{Binding SelectedLanguage}" VerticalAlignment="Center"/>
-                            <CheckBox Content="Global" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" 
-                                      Margin="10,0,5,0" VerticalAlignment="Center" IsChecked="True" 
+                            <CheckBox Content="Global" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"
+                                      Margin="10,0,5,0" VerticalAlignment="Center" IsChecked="True"
                                       IsEnabled="False"/>
                             <!--
                                       IsEnabled="{Binding DllSelected, UpdateSourceTrigger=PropertyChanged}"/>
                                       -->
                             <Label Content="Custom Broadcast Addresses:" HorizontalAlignment="Left"
                                     Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="0" Margin="0,0,10,0"/>
-                            <CheckBox Content="Global" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" 
-                                      Margin="10,0,5,0" VerticalAlignment="Center" IsChecked="True" 
+                            <CheckBox Content="Global" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"
+                                      Margin="10,0,5,0" VerticalAlignment="Center" IsChecked="True"
                                       IsEnabled="False"/>
                             <TextBox Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                       TextWrapping="Wrap"
@@ -188,7 +188,7 @@
                             <TextBlock TextWrapping="Wrap" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="5" Margin="5,10,5,5">
                                 <Run Text="{Binding G.Header, Mode=OneTime}" FontWeight="Bold"/><!--
                                 --><Run Text="{Binding G.TextPreLink, Mode=OneTime}"/>
-                                <Hyperlink Command="{Binding OpenGlobalSettingsFolderCommand}"><Run 
+                                <Hyperlink Command="{Binding OpenGlobalSettingsFolderCommand}"><Run
                                     Text="{Binding G.Link, Mode=OneTime}"/></Hyperlink><!--
                                 --><Run Text="{Binding G.TextPostLink, Mode=OneTime}"/>
                             </TextBlock>
@@ -209,7 +209,7 @@
                                         <TextBlock Text="Licensed under GNU GPLv3" />
                                         <TextBlock Text="Goldberg Emulator is owned by Mr. Goldberg and licensed under GNU LGPLv3" Margin="0,10,0,0"/>
                                         <TextBlock Text="Contributors:" Margin="0,10,0,0" FontWeight="Bold"/>
-                                        <TextBlock Text="UrbanCMC" Margin="0,5,0,0"/>
+                                        <TextBlock Text="UrbanCMC, NoobChester" Margin="0,5,0,0"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </Label.ContentTemplate>
